@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+    stages {
+        stage('Deploy and Install') {
+            steps {
+                sh '''
+                sudo -u ubuntu bash -c "cd /home/ubuntu/frontend && git pull origin main && npm install"
+                '''
+            }
+        }
+        stage('Restart Frontend') {
+            steps {
+                sh 'sudo -u ubuntu pm2 restart express-frontend'
+            }
+        }
+    }
+}
